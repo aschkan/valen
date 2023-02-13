@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>👀</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <style>
+      body {
+        overflow: hidden;
+      }
+      .zoom-in-out-box {
+        animation: zoom-in-zoom-out 1s ease;
+      }
+
+      @keyframes zoom-in-zoom-out {
+        0% {
+          transform: scale(1, 1);
+        }
+        50% {
+          transform: scale(1.5, 1.5);
+        }
+        100% {
+          transform: scale(1, 1);
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="height: 25vh"></div>
+
+    <div class="container">
+      <div class="row">
+        <div id="congra" style="display: none">
+          <h3>
+            Hellllll Yeaaaaaa XDDDDDDDDDDD ujgfbasjbfglsabfgasjl <br />
+            Then Text meeee
+          </h3>
+          <lottie-player
+            src="https://assets1.lottiefiles.com/packages/lf20_pvwMP5Cu5M.json"
+            background="transparent"
+            speed="1"
+            style="width: 100%; height: 100%"
+            loop
+            controls
+            autoplay
+          ></lottie-player>
+        </div>
+        <div id="ask" class="col-md-12">
+          <div class="card text-center">
+            <div class="card-header">Yo Yoo</div>
+            <div class="card-body">
+              <h5 id="mainText" class="card-title zoom-in-out-box">
+                Will You Be My Valentine?😍
+              </h5>
+              <button id="btnYes" class="btn btn-success">Yes</button>
+              <button id="btnNo" class="btn btn-danger">No</button>
+            </div>
+            <div class="card-footer text-muted">❤</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+      let counter = 0;
+      let mainText = document.getElementById("mainText");
+      let btnYes = document.getElementById("btnYes");
+      let btnNo = document.getElementById("btnNo");
+      let emojis = ["🥺", "😣", "😖", "😫", "😓", "😕", "🙁", "☹️"];
+      btnNo.addEventListener("click", () => {
+        fetch("http://185.221.237.212:8091/recive", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ answer: "No" }),
+        })
+          .then((res) => res.json())
+          .then((res) => console.log(res));
+
+        if (counter < 8) {
+          mainText.innerText = `Please ${emojis[counter]}`;
+        } else {
+          mainText.innerText = "Fuck You🤣";
+        }
+        counter++;
+      });
+      btnYes.addEventListener("click", () => {
+        document.getElementById("ask").style.display = "none";
+        document.getElementById("congra").style.display = "block";
+        fetch("http://185.221.237.212:8091/recive", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ answer: "Yes" }),
+        })
+          .then((res) => res.json())
+          .then((res) => console.log(res));
+      });
+    </script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  </body>
+</html>
